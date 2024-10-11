@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máy Tính Cầm Tay</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .calculator {
+            width: 220px;
+            padding: 20px;
+            border: 1px solid #000;
+            border-radius: 10px;
+            background-color: #f5f5f5;
+        }
+        .display {
+            width: 200px;
+            height: 40px;
+            margin-bottom: 10px;
+            text-align: right;
+            padding-right: 10px;
+            font-size: 20px;
+            border: 1px solid #000;
+            border-radius: 5px;
+        }
+        .button {
+            width: 40px;
+            height: 40px;
+            margin: 5px;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .wide {
+            width: 90px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <input type="text" id="display" class="display" disabled>
+    <br>
+    <button class="button" onclick="clearDisplay()">C</button>
+    <button class="button" onclick="deleteChar()">←</button>
+    <button class="button" onclick="inputChar('M+')">M+</button>
+    <button class="button" onclick="inputChar('M-')">M-</button>
+    <br>
+    <button class="button" onclick="inputChar('1')">1</button>
+    <button class="button" onclick="inputChar('2')">2</button>
+    <button class="button" onclick="inputChar('3')">3</button>
+    <button class="button" onclick="inputChar('/')">/</button>
+    <br>
+    <button class="button" onclick="inputChar('4')">4</button>
+    <button class="button" onclick="inputChar('5')">5</button>
+    <button class="button" onclick="inputChar('6')">6</button>
+    <button class="button" onclick="inputChar('*')">*</button>
+    <br>
+    <button class="button" onclick="inputChar('7')">7</button>
+    <button class="button" onclick="inputChar('8')">8</button>
+    <button class="button" onclick="inputChar('9')">9</button>
+    <button class="button" onclick="inputChar('-')">-</button>
+    <br>
+    <button class="button" onclick="inputChar('0')">0</button>
+    <button class="button" onclick="inputChar('.')">.</button>
+    <button class="button" onclick="calculate()">=</button>
+    <button class="button" onclick="inputChar('+')">+</button>
+    <br>
+    <button class="button wide" onclick="calculateSqrt()">√</button>
+    <button class="button wide" onclick="calculateSquare()">x²</button>
+</div>
+
+<script>
+    let memory = 0;
+
+    function inputChar(char) {
+        document.getElementById("display").value += char;
+    }
+
+    function clearDisplay() {
+        document.getElementById("display").value = "";
+    }
+
+    function deleteChar() {
+        let current = document.getElementById("display").value;
+        document.getElementById("display").value = current.substring(0, current.length - 1);
+    }
+
+    function calculate() {
+        let expression = document.getElementById("display").value;
+        try {
+            let result = eval(expression);
+            document.getElementById("display").value = result;
+        } catch (error) {
+            document.getElementById("display").value = "Error";
+        }
+    }
+
+    function calculateSquare() {
+        let value = document.getElementById("display").value;
+        document.getElementById("display").value = Math.pow(value, 2);
+    }
+
+    function calculateSqrt() {
+        let value = document.getElementById("display").value;
+        document.getElementById("display").value = Math.sqrt(value);
+    }
+
+    function addToMemory() {
+        let value = parseFloat(document.getElementById("display").value);
+        memory += value;
+        clearDisplay();
+    }
+
+    function subtractFromMemory() {
+        let value = parseFloat(document.getElementById("display").value);
+        memory -= value;
+        clearDisplay();
+    }
+
+    function recallMemory() {
+        document.getElementById("display").value = memory;
+    }
+</script>
+
+</body>
+</html>
